@@ -1,66 +1,50 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+const quotes = [
+  {
+    text: "Realize deeply that the present moment is all you ever have.",
+    author: "Eckhart Tolle",
+  },
+  {
+    text: "The ability to observe without evaluating is the highest form of intelligence.",
+    author: "Jiddu Krishnamurti",
+  },
+  {
+    text: "Wherever you are, be all there.",
+    author: "Jim Elliot",
+  },
+  {
+    text: "You are not a drop in the ocean. You are the entire ocean in a drop.",
+    author: "Rumi",
+  },
+];
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.js file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+    <>
+      <section className="hero">
+        <h1>Stillpoint</h1>
+        <p className="subtitle">
+          A quiet space for reflection, and two guides to sit with when you need one.
+        </p>
+        <div className="guide-links">
+          <a href="/presence-guide" className="btn">
+            Enter the Presence Guide
           </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+          <a href="/krishnamurti-guide" className="btn">
+            Enter the Krishnamurti Guide
           </a>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="quotes">
+        {quotes.map((q) => (
+          <div className="quote" key={q.author}>
+            <p>&ldquo;{q.text}&rdquo;</p>
+            <cite>{q.author}</cite>
+          </div>
+        ))}
+      </section>
+
+      <footer>Placeholder content &middot; Stillpoint is a work in progress</footer>
+    </>
   );
 }

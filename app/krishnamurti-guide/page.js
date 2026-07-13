@@ -1,3 +1,5 @@
+import AuthGate from "../../components/AuthGate";
+
 export default function KrishnamurtiGuide() {
   return (
     <div className="theme-krishnamurti">
@@ -9,22 +11,27 @@ export default function KrishnamurtiGuide() {
         </p>
       </section>
 
-      <p className="access-note">
-        Requires registration and a one-time &euro;1 payment &mdash; unlocks permanent access
-        (coming in a later step).
-      </p>
-
-      <div className="chat-mock">
-        <div className="chat-bubble">
-          &ldquo;Why do you seek an answer from outside yourself? Can you look at the problem
-          without the conditioning of past experience, and see it freshly, as if for the first
-          time?&rdquo;
+      <AuthGate>
+        <p className="access-note">
+          You&rsquo;re registered. This guide also requires a one-time &euro;1 payment to
+          unlock, coming in the next build step.
+        </p>
+        <div className="chat-mock">
+          <div className="chat-bubble">
+            &ldquo;Why do you seek an answer from outside yourself? Can you look at the problem
+            without the conditioning of past experience, and see it freshly, as if for the
+            first time?&rdquo;
+          </div>
+          <div className="chat-input-mock">
+            <input
+              type="text"
+              placeholder="Payment required to unlock chat"
+              disabled
+            />
+            <button disabled>Send</button>
+          </div>
         </div>
-        <div className="chat-input-mock">
-          <input type="text" placeholder="Type your question here... (chat not yet connected)" disabled />
-          <button disabled>Send</button>
-        </div>
-      </div>
+      </AuthGate>
 
       <footer>
         Placeholder content &middot; payment and chat functionality arrive in later build steps

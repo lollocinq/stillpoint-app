@@ -1,4 +1,5 @@
 import AuthGate from "../../components/AuthGate";
+import PresenceChat from "../../components/PresenceChat";
 
 export default function PresenceGuide() {
   return (
@@ -12,24 +13,10 @@ export default function PresenceGuide() {
       </section>
 
       <AuthGate>
-        <div className="chat-mock">
-          <div className="chat-bubble">
-            &ldquo;Notice what you are feeling right now, without needing to fix it. What
-            remains when you stop thinking about the problem, and simply feel the moment you
-            are in?&rdquo;
-          </div>
-          <div className="chat-input-mock">
-            <input
-              type="text"
-              placeholder="Type your question here... (chat not yet connected)"
-              disabled
-            />
-            <button disabled>Send</button>
-          </div>
-        </div>
+        <PresenceChat />
       </AuthGate>
 
-      <footer>Placeholder content &middot; chat functionality arrives in a later build step</footer>
+      <footer>Placeholder content &middot; Presence Guide chat is now live</footer>
     </div>
   );
 }

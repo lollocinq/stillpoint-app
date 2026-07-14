@@ -45,6 +45,29 @@ export async function GET(req) {
       return new Response("No subscribers to send to", { status: 200 });
     }
 
+    // Resend's shared "onboarding@resend.dev" sender only allows delivery
+    // to the email the Resend account itself was created with, until a
+    // domain is verified at resend.com/domains. Until then, narrow the
+    // send down to that one test address so real sends don't 403. Once a
+    // domain is verified, set RESEND_DOMAIN_VERIFIED=true in the
+    // environment (no code change needed) to reach every registered user.
+    const domainVerified = process.env.RESEND_DOMAIN_VERIFIED === "true";
+    const recipients = domainVerified
+      ? emails
+      : emails.filter((email) => email === process.env.RESEND_TEST_RECIPIENT);
+
+    if (!domainVerified && !process.env.RESEND_TEST_RECIPIENT) {
+      console.error("RESEND_TEST_RECIPIENT is not configured.");
+      return new Response("RESEND_TEST_RECIPIENT not configured", { status: 500 });
+    }
+
+    if (recipients.length === 0) {
+      return new Response(
+        "No sendable recipients (Resend sandbox mode restricts sending until a domain is verified)",
+        { status: 200 }
+      );
+    }
+
     // Pick a quote deterministically based on the current week, so each
     // weekly send is different without needing to store any extra state.
     const weekNumber = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
@@ -52,8 +75,12 @@ export async function GET(req) {
 
     const { error: sendError } = await resend.emails.send({
       from: "Stillpoint <onboarding@resend.dev>",
-      to: "onboarding@resend.dev",
-      bcc: emails,
+      // In sandbox mode Resend requires every address on the send,
+      // including "to", to be the account's own verified email. Using it
+      // here (rather than the resend.dev placeholder) satisfies that, and
+      // remains a harmless, valid "to" once a real domain is verified too.
+      to: process.env.RESEND_TEST_RECIPIENT,
+      bcc: recipients,
       subject: "This week's stillpoint",
       html: `
         <div style="font-family: Georgia, serif; max-width: 480px; margin: 0 auto; padding: 24px; color: #2b2b28;">
@@ -71,7 +98,10 @@ export async function GET(req) {
       throw sendError;
     }
 
-    return new Response(`Newsletter sent to ${emails.length} subscriber(s)`, { status: 200 });
+    return new Response(
+      `Newsletter sent to ${recipients.length} of ${emails.length} registered subscriber(s)`,
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Newsletter send error:", error);
     return new Response("Newsletter send failed", { status: 500 });

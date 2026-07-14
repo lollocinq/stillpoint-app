@@ -87,10 +87,15 @@ nav a.active {
 
 /* ===== Hero ===== */
 .hero {
-  max-width: 640px;
+  max-width: 760px;
   margin: 0 auto;
   padding: var(--space-xl) var(--space-md) var(--space-lg);
   text-align: center;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.45), rgba(255,255,255,0.15)),
+    url('/sun-background.svg') center/cover no-repeat;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(120, 90, 40, 0.14);
 }
 
 .hero h1 { font-size: 3rem; margin-bottom: var(--space-sm); }

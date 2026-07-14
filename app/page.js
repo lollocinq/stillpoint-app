@@ -1,21 +1,4 @@
-const quotes = [
-  {
-    text: "Realize deeply that the present moment is all you ever have.",
-    author: "Eckhart Tolle",
-  },
-  {
-    text: "The ability to observe without evaluating is the highest form of intelligence.",
-    author: "Jiddu Krishnamurti",
-  },
-  {
-    text: "Wherever you are, be all there.",
-    author: "Jim Elliot",
-  },
-  {
-    text: "You are not a drop in the ocean. You are the entire ocean in a drop.",
-    author: "Rumi",
-  },
-];
+import { quotes } from "../lib/quotes";
 
 export default function Home() {
   return (
@@ -37,7 +20,7 @@ export default function Home() {
 
       <section className="quotes">
         {quotes.map((q) => (
-          <div className="quote" key={q.author}>
+          <div className="quote" key={q.text}>
             <p>&ldquo;{q.text}&rdquo;</p>
             <cite>{q.author}</cite>
           </div>
